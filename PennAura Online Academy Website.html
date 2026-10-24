@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PennAura Online Academy - Learn • Grow • Succeed</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            950: '#030f26',
+                            900: '#071633',
+                            800: '#0b2046',
+                            700: '#112b5a',
+                            600: '#1d4280',
+                        },
+                        gold: {
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030f26;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #fff3b0 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-navy-card {
+            background: rgba(11, 32, 70, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .gold-border-glow {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.15);
+        }
+
+        .gold-border-glow:hover {
+            box-shadow: 0 0 35px rgba(245, 158, 11, 0.35);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030f26;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 4px;
+        }
+
+        @keyframes pulseAura {
+            0%, 100% { opacity: 0.25; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(1.08); }
+        }
+        .aura-pulse {
+            animation: pulseAura 7s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-gold-500 selection:text-navy-950">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 text-navy-950 text-xs sm:text-sm font-bold py-2 px-4 text-center shadow-md flex items-center justify-center gap-2">
+        <i class="fa-solid fa-graduation-cap text-base animate-bounce"></i>
+        <span>PennAura Online Academy Admissions Open! Flexible Rates (Per-Subject or Full Package)</span>
+        <button onclick="openEnrollModal()" class="ml-2 underline font-black hover:text-black cursor-pointer">Register Now &rarr;</button>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-40 bg-navy-950/90 backdrop-blur-md border-b border-gold-500/20 py-3.5 px-4 sm:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3">
+                <div class="relative w-11 h-11 rounded-full bg-gradient-to-tr from-gold-600 via-gold-400 to-yellow-100 p-[2px] shadow-lg flex items-center justify-center">
+                    <div class="w-full h-full bg-navy-950 rounded-full flex items-center justify-center">
+                        <span class="font-serif font-black text-2xl text-gold-400">PA</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-serif font-black text-xl sm:text-2xl text-white tracking-wide">PennAura</div>
+                    <p class="text-[9px] tracking-widest uppercase text-gold-400 font-extrabold -mt-1">Online Academy</p>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden lg:flex items-center space-x-6 text-xs sm:text-sm font-semibold text-gray-300">
+                <a href="#tuition-sections" class="hover:text-gold-400 transition">Programs & Subjects</a>
+                <a href="#calculator-section" class="hover:text-gold-400 transition text-gold-400 font-bold flex items-center gap-1">
+                    <i class="fa-solid fa-calculator"></i> Fee Calculator
+                </a>
+                <a href="#fee-comparison" class="hover:text-gold-400 transition">Fee Pricing</a>
+                <a href="#quiz-arena" class="hover:text-gold-400 transition flex items-center gap-1">
+                    <i class="fa-solid fa-gamepad text-gold-400"></i> Revision Quiz Arena
+                </a>
+            </div>
+
+            <!-- Admin Controls & Call To Action -->
+            <div class="flex items-center gap-3">
+                <button id="adminToggleBtn" onclick="toggleAdminMode()" class="px-3 py-1.5 text-xs rounded-full border border-gold-500/40 text-gold-400 bg-gold-500/10 hover:bg-gold-500/20 transition flex items-center gap-1.5 font-bold">
+                    <i class="fa-solid fa-lock" id="adminLockIcon"></i>
+                    <span id="adminBtnText">Admin Mode: OFF</span>
+                </button>
+
+                <button onclick="openEnrollModal()" class="hidden sm:inline-flex bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-lg hover:shadow-gold-500/30 hover:scale-105 transition">
+                    Enroll Online
+                </button>
+
+                <button onclick="toggleMobileMenu()" class="lg:hidden text-2xl text-gold-400 focus:outline-none">
+                    <i class="fa-solid fa-bars" id="menuIcon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden mt-3 pt-3 border-t border-navy-800 flex flex-col space-y-3 text-sm font-semibold">
+            <a href="#tuition-sections" onclick="toggleMobileMenu()" class="text-gray-300">Programs & Subjects</a>
+            <a href="#calculator-section" onclick="toggleMobileMenu()" class="text-gold-400">Tuition Calculator</a>
+            <a href="#fee-comparison" onclick="toggleMobileMenu()" class="text-gray-300">Fee Pricing</a>
+            <a href="#quiz-arena" onclick="toggleMobileMenu()" class="text-gold-400">Revision Quiz Arena</a>
+            <button onclick="openEnrollModal(); toggleMobileMenu()" class="w-full bg-gold-500 text-navy-950 font-extrabold py-2.5 rounded-xl">
+                Enroll Online
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative py-16 lg:py-24 px-4 sm:px-8 overflow-hidden bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950">
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gold-500/10 rounded-full blur-3xl pointer-events-none aura-pulse"></div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 bg-navy-800 border border-gold-500/30 px-4 py-1.5 rounded-full text-xs font-extrabold text-gold-400 uppercase tracking-widest">
+                    <i class="fa-solid fa-award"></i> Learn • Grow • Succeed
+                </div>
+
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    Better Learning.<br>
+                    <span class="text-gold-gradient font-serif italic">Brighter Tomorrow.</span>
+                </h1>
+
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-200 font-serif">
+                    Your Future, <span class="text-gold-400 border-b-2 border-gold-500">Our Priority</span>
+                </p>
+
+                <p class="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Quality Tuition. Real Progress. Lasting Results. Specialized e-learning programs covering Primary (Grade 1–7), Form 1–4, and GCE Candidates with flexible subject choices.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                    <button onclick="openEnrollModal()" class="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy-950 text-xs sm:text-sm font-extrabold px-8 py-3.5 rounded-xl shadow-xl transition">
+                        Register Today <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                    <a href="#calculator-section" class="bg-navy-800 hover:bg-navy-700 text-white border border-gold-500/30 font-bold px-6 py-3.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-calculator text-gold-400"></i> Calculate My Fee
+                    </a>
+                </div>
+
+                <div class="pt-4 text-xs font-bold uppercase tracking-widest text-gold-400/90 flex items-center justify-center lg:justify-start gap-3">
+                    <span>Learn Today</span>
+                    <span class="w-2 h-2 rounded-full bg-gold-500"></span>
+                    <span>Lead Tomorrow</span>
+                </div>
+            </div>
+
+            <!-- Visual Badge Emblem -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative w-full max-w-md bg-navy-card p-8 rounded-3xl border-2 border-gold-500/30 gold-border-glow text-center space-y-6">
+                    <div class="mx-auto w-28 h-28 rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 p-1 shadow-2xl flex items-center justify-center">
+                        <div class="w-full h-full bg-navy-950 rounded-full flex flex-col items-center justify-center">
+                            <i class="fa-solid fa-graduation-cap text-3xl text-gold-400 mb-1"></i>
+                            <span class="font-serif font-black text-xl text-white">PennAura</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h3 class="text-2xl font-extrabold text-white">PennAura Online Academy</h3>
+                        <p class="text-xs text-gold-400 font-bold uppercase tracking-wider">Quality Online Coaching</p>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 pt-2 border-t border-navy-800">
+                        <div class="p-2 rounded-xl bg-navy-900 border border-gold-500/20">
+                            <i class="fa-solid fa-book-bookmark text-gold-400 mb-1 block"></i>
+                            <span class="text-[10px] font-bold text-gray-200 block uppercase">KNOWLEDGE</span>
+                        </div>
+                        <div class="p-2 rounded-xl bg-navy-900 border border-gold-500/20">
+                            <i class="fa-solid fa-brain text-gold-400 mb-1 block"></i>
+                            <span class="text-[10px] font-bold text-gray-200 block uppercase">SKILLS</span>
+                        </div>
+                        <div class="p-2 rounded-xl bg-navy-900 border border-gold-500/20">
+                            <i class="fa-solid fa-trophy text-gold-400 mb-1 block"></i>
+                            <span class="text-[10px] font-bold text-gray-200 block uppercase">SUCCESS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION: ACADEMY PILLARS -->
+    <section class="py-12 bg-navy-950 border-y border-gold-500/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-6 rounded-2xl bg-navy-card border border-gold-500/20 text-center">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-gold-500/10 text-gold-400 text-xl flex items-center justify-center">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-white mb-1">Experienced Tutors</h4>
+                    <p class="text-xs text-gray-400">Dedicated teachers focused on simplifying difficult concepts.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-navy-card border border-gold-500/20 text-center">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-gold-500/10 text-gold-400 text-xl flex items-center justify-center">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-white mb-1">Flexible E-Learning</h4>
+                    <p class="text-xs text-gray-400">Convenient class schedules with live and recorded revision options.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-navy-card border border-gold-500/20 text-center">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-gold-500/10 text-gold-400 text-xl flex items-center justify-center">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-white mb-1">Personalized Support</h4>
+                    <p class="text-xs text-gray-400">One-on-one assistance to strengthen individual student weak points.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-navy-card border border-gold-500/20 text-center">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-gold-500/10 text-gold-400 text-xl flex items-center justify-center">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-white mb-1">Focused on Results</h4>
+                    <p class="text-xs text-gray-400">Targeted exam prep designed to deliver top division scores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: PROGRAM SECTIONS & SUBJECT COVERAGE -->
+    <section id="tuition-sections" class="py-16 px-4 sm:px-8 bg-navy-900/50">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div class="text-center space-y-3">
+                <div class="inline-block px-4 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-extrabold uppercase tracking-wider">
+                    Programs Offered & Subjects
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Tuition Levels & Subject Coverage</h2>
+                <p class="text-gray-300 text-xs sm:text-sm max-w-xl mx-auto">Explore full subject lists for each grade category. Admins can click "Admin Mode" to edit rates, add subjects, or add new grade levels.</p>
+
+                <!-- Admin Add Level Button -->
+                <div id="adminAddLevelWrapper" class="hidden pt-2 flex justify-center gap-3">
+                    <button onclick="openAddLevelModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition inline-flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Add New Academic Grade Level
+                    </button>
+                    <button onclick="resetToDefaults()" class="bg-navy-800 hover:bg-navy-700 text-rose-400 border border-rose-500/30 font-bold text-xs px-4 py-2 rounded-xl transition inline-flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-left"></i> Reset to Original Defaults
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Programs List Container -->
+            <div id="programsContainer" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: DYNAMIC FEE CALCULATOR WIDGET -->
+    <section id="calculator-section" class="py-16 px-4 sm:px-8 bg-navy-950 border-t border-gold-500/10">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div class="text-center space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-extrabold uppercase tracking-wider">
+                    <i class="fa-solid fa-calculator"></i> Interactive Fee Tool
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Tuition Fee Calculator</h2>
+                <p class="text-gray-300 text-xs sm:text-sm">Choose your grade level and preferred enrollment structure to calculate your monthly fee.</p>
+            </div>
+
+            <div class="bg-navy-card rounded-3xl border-2 border-gold-500/30 p-6 sm:p-10 shadow-2xl space-y-6">
+                <!-- Step 1: Grade Selection -->
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gold-400 tracking-wider mb-2">Step 1: Select Grade Category</label>
+                    <div id="calcGradeButtons" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Step 2: Pricing Type Toggle -->
+                <div class="bg-navy-900/90 p-4 rounded-2xl border border-navy-700 space-y-3">
+                    <label class="block text-xs font-bold uppercase text-gold-400 tracking-wider">Step 2: Choose Pricing Plan</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 p-3 rounded-xl bg-navy-800 border border-navy-700 cursor-pointer hover:border-gold-500/40">
+                            <input type="radio" name="calcPlanType" value="perSubject" checked onchange="onCalcPlanChange()" class="accent-gold-500">
+                            <div>
+                                <span class="text-xs font-bold text-white block">Pay Per Subject</span>
+                                <span id="calcPerSubjectRateLabel" class="text-[11px] text-gold-400 font-semibold">K50 / subject / month</span>
+                            </div>
+                        </label>
+
+                        <label class="flex items-center gap-3 p-3 rounded-xl bg-navy-800 border border-navy-700 cursor-pointer hover:border-gold-500/40">
+                            <input type="radio" name="calcPlanType" value="fullPackage" onchange="onCalcPlanChange()" class="accent-gold-500">
+                            <div>
+                                <span class="text-xs font-bold text-white block">Full All-Subject Package</span>
+                                <span id="calcFullPackageRateLabel" class="text-[11px] text-emerald-400 font-semibold">K250 / month (Discounted)</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 3: Subject Checkboxes -->
+                <div id="calcSubjectsWrapper">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-xs font-bold uppercase text-gold-400 tracking-wider">Step 3: Pick Enrolled Subjects</label>
+                        <div class="space-x-3 text-[11px]">
+                            <button type="button" onclick="toggleAllCalcSubjects(true)" class="text-gray-400 hover:text-gold-400 font-bold underline">Select All</button>
+                            <button type="button" onclick="toggleAllCalcSubjects(false)" class="text-gray-400 hover:text-gold-400 font-bold underline">Clear All</button>
+                        </div>
+                    </div>
+                    <div id="calcSubjectsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-3 bg-navy-900 rounded-2xl border border-navy-800">
+                        <!-- Checkboxes rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Fee Summary Box -->
+                <div class="p-6 rounded-2xl bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border border-gold-500/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="text-center sm:text-left">
+                        <span class="text-xs uppercase text-gray-400 font-bold block mb-1">Calculated Monthly Fee</span>
+                        <div id="calcTotalDisplay" class="text-3xl sm:text-4xl font-extrabold text-gold-400">K0</div>
+                        <span id="calcSummarySubtext" class="text-[11px] text-gray-400">0 subjects selected</span>
+                    </div>
+
+                    <button onclick="enrollWithCalculatedData()" class="w-full sm:w-auto bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy-950 font-extrabold px-8 py-3.5 rounded-xl shadow-lg transition text-xs">
+                        Register with Selected Subjects &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: PRICING COMPARISON -->
+    <section id="fee-comparison" class="py-16 px-4 sm:px-8 bg-navy-900/60 border-t border-gold-500/10">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div class="text-center space-y-3">
+                <div class="inline-block px-4 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-extrabold uppercase tracking-wider">
+                    Transparent Rates
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Fee Structure & Billing Options</h2>
+                <p class="text-gray-300 text-xs sm:text-sm max-w-xl mx-auto">Choose between paying per subject or saving more with our full monthly package rates.</p>
+            </div>
+
+            <div id="pricingTableContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: ACADEMIC REVISION QUIZ ARENA -->
+    <section id="quiz-arena" class="py-16 px-4 sm:px-8 bg-navy-950 border-t border-gold-500/10">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div class="text-center space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-extrabold uppercase tracking-wider">
+                    <i class="fa-solid fa-gamepad"></i> Interactive Revision
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Academic Quiz Revision Arena</h2>
+                <p class="text-gray-300 text-xs sm:text-sm">Test your knowledge with quick revision quizes for Primary, Form 1–4, and GCE subjects.</p>
+            </div>
+
+            <div class="bg-navy-card rounded-3xl border-2 border-gold-500/30 p-6 sm:p-10 shadow-2xl relative">
+                <!-- Quiz Category Pick -->
+                <div id="quizPickView" class="space-y-6">
+                    <h3 class="text-lg font-bold text-white text-center">Select Quiz Category:</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <button onclick="startQuizGame('primary')" class="p-5 rounded-2xl bg-navy-900 border border-sky-500/30 hover:border-sky-400 text-left transition group">
+                            <i class="fa-solid fa-child text-sky-400 text-2xl mb-2 group-hover:scale-110 transition block"></i>
+                            <h4 class="font-bold text-white text-sm">Primary (Grade 7) Quiz</h4>
+                            <p class="text-[11px] text-gray-400 mt-1">Maths & Integrated Science fundamentals.</p>
+                        </button>
+                        <button onclick="startQuizGame('secondary')" class="p-5 rounded-2xl bg-navy-900 border border-emerald-500/30 hover:border-emerald-400 text-left transition group">
+                            <i class="fa-solid fa-book-open text-emerald-400 text-2xl mb-2 group-hover:scale-110 transition block"></i>
+                            <h4 class="font-bold text-white text-sm">Form 1 - 4 Quiz</h4>
+                            <p class="text-[11px] text-gray-400 mt-1">Maths, Chemistry, Biology & Physics.</p>
+                        </button>
+                        <button onclick="startQuizGame('gce')" class="p-5 rounded-2xl bg-navy-900 border border-purple-500/30 hover:border-purple-400 text-left transition group">
+                            <i class="fa-solid fa-award text-purple-400 text-2xl mb-2 group-hover:scale-110 transition block"></i>
+                            <h4 class="font-bold text-white text-sm">GCE Rewrite Quiz</h4>
+                            <p class="text-[11px] text-gray-400 mt-1">Exam revision & key past concepts.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Quiz Play -->
+                <div id="quizActiveView" class="hidden space-y-6">
+                    <div class="flex items-center justify-between border-b border-navy-800 pb-3 text-xs font-bold text-gray-300">
+                        <span id="quizCategoryLabel" class="text-gold-400 uppercase tracking-wider">Primary Quiz</span>
+                        <div class="flex items-center gap-4">
+                            <span><i class="fa-solid fa-clock text-gold-400 mr-1"></i> Time: <span id="quizTimer">15</span>s</span>
+                            <span>Q <span id="quizCurrentIndex">1</span>/<span id="quizTotalQuestions">5</span></span>
+                        </div>
+                    </div>
+
+                    <div class="min-h-[60px]">
+                        <h3 id="quizQuestionText" class="text-base sm:text-lg font-bold text-white leading-relaxed">Question goes here...</h3>
+                    </div>
+
+                    <div id="quizOptionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Dynamic options -->
+                    </div>
+
+                    <div id="quizFeedbackBox" class="hidden p-3 rounded-xl text-xs font-bold text-center"></div>
+
+                    <div class="flex justify-end">
+                        <button id="quizNextBtn" onclick="nextQuizQuestion()" disabled class="bg-gold-500 opacity-50 cursor-not-allowed text-navy-950 font-extrabold px-6 py-2.5 rounded-xl text-xs transition">
+                            Next Question <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Results -->
+                <div id="quizResultsView" class="hidden text-center space-y-6 py-4">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-gold-500/20 border border-gold-400 text-gold-400 flex items-center justify-center text-3xl">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h3 class="text-2xl font-extrabold text-white">Quiz Complete!</h3>
+                        <p id="quizResultMessage" class="text-xs text-gray-300">Well done on completing the revision set.</p>
+                    </div>
+
+                    <div class="bg-navy-900 p-4 rounded-2xl border border-navy-800 inline-block min-w-[200px]">
+                        <span class="text-[10px] text-gray-400 font-bold uppercase block">Final Score</span>
+                        <span id="quizScoreText" class="text-3xl font-extrabold text-gold-400">0 / 5</span>
+                    </div>
+
+                    <div class="flex justify-center gap-3">
+                        <button onclick="resetQuizView()" class="bg-navy-800 hover:bg-navy-700 text-white border border-gold-500/30 px-5 py-2.5 rounded-xl font-bold text-xs transition">
+                            Try Another Quiz
+                        </button>
+                        <button onclick="openEnrollModal()" class="bg-gold-500 text-navy-950 px-5 py-2.5 rounded-xl font-extrabold text-xs transition">
+                            Join Full Classes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy-950 border-t border-gold-500/20 pt-12 pb-6 px-4 sm:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-gold-500 text-navy-950 font-serif font-black text-sm flex items-center justify-center">PA</div>
+                    <span class="font-serif font-bold text-lg text-white">PennAura</span>
+                </div>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    PennAura Online Academy provides accessible, high-quality tuition for Primary (Grade 1-7), Form 1–4, and GCE candidates.
+                </p>
+                <p class="text-[11px] text-gold-400 font-bold uppercase">Better Learning. Brighter Tomorrow.</p>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-white mb-3 uppercase tracking-wider border-b border-navy-800 pb-2">Academic Sections</h4>
+                <ul class="space-y-2 text-xs text-gray-300">
+                    <li><a href="#tuition-sections" class="hover:text-gold-400">Primary (Grade 1 - 7)</a></li>
+                    <li><a href="#tuition-sections" class="hover:text-gold-400">Form 1 - 4 Secondary</a></li>
+                    <li><a href="#tuition-sections" class="hover:text-gold-400">GCE Candidates</a></li>
+                    <li><a href="#quiz-arena" class="hover:text-gold-400">Revision Quizzes</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-white mb-3 uppercase tracking-wider border-b border-navy-800 pb-2">Contact & Admissions</h4>
+                <ul class="space-y-2 text-xs text-gray-300">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-gold-400"></i> info@pennaura-academy.com</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-gold-400"></i> +260 970 000 000 / +260 960 000 000</li>
+                    <li class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-gold-400"></i> WhatsApp Admissions</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-white mb-3 uppercase tracking-wider border-b border-navy-800 pb-2">Get Started</h4>
+                <p class="text-xs text-gray-400 mb-3">Register today to secure your tuition spot.</p>
+                <button onclick="openEnrollModal()" class="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold py-2.5 rounded-xl text-xs transition">
+                    Enroll Student Now
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-6 border-t border-navy-900 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-3">
+            <p>&copy; 2026 PennAura Online Academy. All Rights Reserved.</p>
+            <p class="text-gold-400 font-semibold">Learn Today • Lead Tomorrow</p>
+        </div>
+    </footer>
+
+    <!-- MODAL: ENROLLMENT FORM & WHATSAPP GENERATOR -->
+    <div id="enrollModal" class="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-navy-900 border-2 border-gold-500/30 rounded-3xl w-full max-w-lg p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeEnrollModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-1 mb-6">
+                <div class="w-10 h-10 rounded-full bg-gold-500/20 text-gold-400 mx-auto flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <h3 class="text-xl font-extrabold text-white">Student Enrollment Form</h3>
+                <p class="text-xs text-gray-300">Complete your details to register for PennAura classes.</p>
+            </div>
+
+            <form id="enrollForm" onsubmit="submitEnrollmentForm(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-gray-300 font-bold mb-1">Student Full Name</label>
+                    <input type="text" id="enrollName" required placeholder="e.g. Chileshe Mwamba" class="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-bold mb-1">Parent / Student Phone (WhatsApp)</label>
+                    <input type="tel" id="enrollPhone" required placeholder="e.g. +260 970 000 000" class="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-bold mb-1">Grade Category</label>
+                    <select id="enrollGradeSelect" onchange="onEnrollGradeSelectChange()" class="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white focus:outline-none">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-bold mb-1">Enrollment Plan</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 p-2.5 rounded-xl bg-navy-950 border border-navy-700 text-gray-200 cursor-pointer">
+                            <input type="radio" name="enrollPlanRadio" value="perSubject" checked onchange="updateEnrollSummary()" class="accent-gold-500">
+                            <span>Per Subject Rate</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 rounded-xl bg-navy-950 border border-navy-700 text-gray-200 cursor-pointer">
+                            <input type="radio" name="enrollPlanRadio" value="fullPackage" onchange="updateEnrollSummary()" class="accent-gold-500">
+                            <span>Full Package</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-bold mb-1">Select Enrolled Subjects</label>
+                    <div id="enrollSubjectsChecklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-36 overflow-y-auto p-3 bg-navy-950 rounded-xl border border-navy-800">
+                        <!-- Checkboxes inserted via JS -->
+                    </div>
+                </div>
+
+                <div class="p-3 bg-navy-950 rounded-xl border border-gold-500/30 flex items-center justify-between text-xs font-bold">
+                    <span class="text-gray-300">Total Monthly Fee:</span>
+                    <span id="enrollModalFeeTotal" class="text-gold-400 text-base font-extrabold">K0</span>
+                </div>
+
+                <button type="submit" class="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold py-3 rounded-xl transition text-xs shadow-lg">
+                    Submit & Send via WhatsApp <i class="fa-brands fa-whatsapp text-sm ml-1"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ADMIN EDIT / ADD LEVEL -->
+    <div id="adminEditModal" class="fixed inset-0 z-50 bg-navy-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-navy-900 border-2 border-gold-500/30 rounded-3xl w-full max-w-lg p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminEditModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-1 mb-6">
+                <h3 id="adminModalHeaderTitle" class="text-xl font-extrabold text-white">Edit Program Level</h3>
+                <p class="text-xs text-gold-400">Modify subjects, per-subject pricing, or package fees</p>
+            </div>
+
+            <form id="adminEditForm" onsubmit="saveAdminProgramData(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="adminEditId">
+
+                <div>
+                    <label class="block text-gray-300 font-bold mb-1">Program Title (e.g. Primary Tuitions)</label>
+                    <input type="text" id="adminTitleInput" required class="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-bold mb-1">Tagline / Subtitle Badge</label>
+                    <input type="text" id="adminTaglineInput" required class="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-gray-300 font-bold mb-1">Per-Subject Rate (ZMW)</label>
+                        <input type="number" id="adminPerSubjectInput" required min="1" class="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-bold mb-1">Full Package Rate (ZMW)</label>
+                        <input type="number" id="adminFullPackageInput" required min="1" class="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-bold mb-1">Subject List (Comma separated)</label>
+                    <textarea id="adminSubjectsInput" rows="4" required placeholder="Mathematics, Science, English..." class="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white focus:outline-none"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeAdminEditModal()" class="bg-navy-800 text-gray-300 font-bold px-4 py-2.5 rounded-xl">Cancel</button>
+                    <button type="submit" class="bg-gold-500 text-navy-950 font-extrabold px-6 py-2.5 rounded-xl">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-gold-500 text-navy-950 font-extrabold px-5 py-3 rounded-2xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2 text-xs">
+        <i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Action updated!</span>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // DEFAULT INITIAL DATA WITH PRIMARY, FORM 1-4 AND GCE SUBJECTS & PRICING
+        const initialProgramsData = [
+            {
+                id: "primary",
+                title: "PRIMARY SECTION (GRADE 1 - 7)",
+                tagline: "Build Strong Academic Foundations",
+                perSubjectRate: 50,
+                fullPackageRate: 250,
+                icon: "fa-graduation-cap",
+                subjects: [
+                    "Mathematics",
+                    "Integrated Science",
+                    "Social Studies",
+                    "English Language",
+                    "Creative & Technology Studies (CTS)",
+                    "Special Paper 1",
+                    "Special Paper 2",
+                    "Chitonga / Cinyanja"
+                ]
+            },
+            {
+                id: "secondary",
+                title: "FORM 1 - 4 (SECONDARY)",
+                tagline: "Excel in Junior & Senior Secondary",
+                perSubjectRate: 100,
+                fullPackageRate: 450,
+                icon: "fa-book-open-reader",
+                subjects: [
+                    "Mathematics",
+                    "English Language",
+                    "Biology",
+                    "Chemistry",
+                    "Physics",
+                    "Additional Mathematics",
+                    "Civic Education",
+                    "Geography",
+                    "History",
+                    "Commerce",
+                    "Religious Education",
+                    "Agricultural Science"
+                ]
+            },
+            {
+                id: "gce",
+                title: "GCE CANDIDATES",
+                tagline: "Achieve Distinction in Exam Rewrites",
+                perSubjectRate: 150,
+                fullPackageRate: 600,
+                icon: "fa-award",
+                subjects: [
+                    "GCE Mathematics",
+                    "GCE Biology",
+                    "GCE Chemistry",
+                    "GCE Physics",
+                    "GCE English Language",
+                    "GCE Commerce & Accounts",
+                    "GCE Geography",
+                    "GCE Civic Education"
+                ]
+            }
+        ];
+
+        let programsData = [];
+        let isAdminMode = false;
+        let selectedCalcLevelId = "primary";
+
+        // QUIZ DATA
+        const quizBank = {
+            primary: [
+                { q: "What is 15 + (6 × 4)?", options: ["39", "84", "30", "45"], correct: 0 },
+                { q: "Which organ in human bodies pumps blood?", options: ["Lungs", "Heart", "Brain", "Kidney"], correct: 1 },
+                { q: "What is the primary gas humans breathe in for survival?", options: ["Nitrogen", "Carbon Dioxide", "Oxygen", "Hydrogen"], correct: 2 },
+                { q: "Calculate the area of a square with side length 6cm.", options: ["24 cm²", "36 cm²", "12 cm²", "18 cm²"], correct: 1 },
+                { q: "What is the capital city of Zambia?", options: ["Ndola", "Kitwe", "Lusaka", "Livingstone"], correct: 2 }
+            ],
+            secondary: [
+                { q: "Solve for x: 3x - 5 = 16", options: ["x = 7", "x = 5", "x = 8", "x = 6"], correct: 0 },
+                { q: "What is the chemical symbol for Gold?", options: ["Ag", "Au", "Fe", "Cu"], correct: 1 },
+                { q: "Which cell organelle is known as the powerhouse of the cell?", options: ["Ribosome", "Nucleus", "Mitochondria", "Golgi body"], correct: 2 },
+                { q: "According to Ohm's Law, Voltage (V) equals:", options: ["Current × Resistance (I × R)", "Current ÷ Resistance", "Resistance ÷ Current", "Power × Time"], correct: 0 },
+                { q: "Factorize completely: x² - 16", options: ["(x - 4)(x - 4)", "(x + 4)(x - 4)", "(x + 8)(x - 2)", "x(x - 16)"], correct: 1 }
+            ],
+            gce: [
+                { q: "Where does protein digestion begin in the human digestive system?", options: ["Mouth", "Stomach", "Small Intestine", "Oesophagus"], correct: 1 },
+                { q: "Find the gradient of the line passing through points (1, 2) and (3, 10).", options: ["2", "3", "4", "5"], correct: 2 },
+                { q: "Which acid is present in human gastric juice?", options: ["Sulfuric Acid", "Nitric Acid", "Hydrochloric Acid", "Acetic Acid"], correct: 2 },
+                { q: "What is the SI unit of electric current?", options: ["Volt", "Ampere", "Ohm", "Watt"], correct: 1 },
+                { q: "Which component of blood is responsible for blood clotting?", options: ["Red Blood Cells", "White Blood Cells", "Platelets", "Plasma"], correct: 2 }
+            ]
+        };
+
+        let activeQuizCat = null;
+        let activeQIndex = 0;
+        let currentQuizScore = 0;
+        let quizTimer = null;
+        let quizTimeLeft = 15;
+        let currentSelectedOpt = null;
+
+        // APP INITIALIZATION
+        window.onload = function() {
+            loadProgramsData();
+            renderPrograms();
+            renderPricingTable();
+            initCalculator();
+        };
+
+        function loadProgramsData() {
+            const saved = localStorage.getItem('pennaura_programs_v2');
+            if (saved) {
+                try {
+                    programsData = JSON.parse(saved);
+                } catch(e) {
+                    programsData = initialProgramsData;
+                }
+            } else {
+                programsData = initialProgramsData;
+            }
+        }
+
+        function saveProgramsData() {
+            localStorage.setItem('pennaura_programs_v2', JSON.stringify(programsData));
+            renderPrograms();
+            renderPricingTable();
+            initCalculator();
+            showToast("Program data updated successfully!");
+        }
+
+        function resetToDefaults() {
+            if (confirm("Reset all grade levels, subject lists, and pricing back to original defaults?")) {
+                programsData = initialProgramsData;
+                saveProgramsData();
+            }
+        }
+
+        // TOGGLE ADMIN MODE
+        function toggleAdminMode() {
+            isAdminMode = !isAdminMode;
+            document.getElementById('adminBtnText').textContent = isAdminMode ? "Admin Mode: ON" : "Admin Mode: OFF";
+            document.getElementById('adminLockIcon').className = isAdminMode ? "fa-solid fa-lock-open text-emerald-400" : "fa-solid fa-lock";
+            
+            const addBtnWrapper = document.getElementById('adminAddLevelWrapper');
+            if (isAdminMode) {
+                addBtnWrapper.classList.remove('hidden');
+                showToast("Admin Mode enabled! You can edit or add subjects and rates.");
+            } else {
+                addBtnWrapper.classList.add('hidden');
+                showToast("Admin Mode disabled.");
+            }
+
+            renderPrograms();
+        }
+
+        // RENDER PROGRAMS & SUBJECTS
+        function renderPrograms() {
+            const container = document.getElementById('programsContainer');
+            container.innerHTML = '';
+
+            programsData.forEach(prog => {
+                const card = document.createElement('div');
+                card.className = "bg-navy-card rounded-3xl p-6 sm:p-8 border-2 border-gold-500/20 gold-border-glow relative flex flex-col justify-between";
+
+                let adminButtons = '';
+                if (isAdminMode) {
+                    adminButtons = `
+                        <div class="absolute top-4 right-4 flex gap-2 z-10">
+                            <button onclick="openEditProgramModal('${prog.id}')" class="bg-gold-500 text-navy-950 px-2.5 py-1 rounded-lg text-xs font-extrabold hover:bg-gold-400">
+                                <i class="fa-solid fa-pen"></i> Edit
+                            </button>
+                            <button onclick="deleteProgramLevel('${prog.id}')" class="bg-rose-600 text-white px-2.5 py-1 rounded-lg text-xs font-extrabold hover:bg-rose-500">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+
+                const subjectBadges = prog.subjects.map((s, idx) => `
+                    <div class="flex items-center justify-between p-2 rounded-xl bg-navy-900 border border-navy-800 text-xs text-gray-200">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-book-bookmark text-gold-400 text-xs"></i> ${s}</span>
+                        ${isAdminMode ? `<button onclick="removeSingleSubject('${prog.id}', ${idx})" class="text-rose-400 hover:text-rose-300 text-xs"><i class="fa-solid fa-xmark"></i></button>` : ''}
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    ${adminButtons}
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 text-xl mb-4">
+                            <i class="fa-solid ${prog.icon || 'fa-graduation-cap'}"></i>
+                        </div>
+                        
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/20">
+                            ${prog.tagline}
+                        </span>
+
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-white mt-3 mb-2">${prog.title}</h3>
+                        
+                        <!-- Rates Box -->
+                        <div class="my-4 p-3.5 rounded-2xl bg-navy-950 border border-navy-800 grid grid-cols-2 gap-2 text-center">
+                            <div>
+                                <span class="text-[10px] text-gray-400 font-bold uppercase block">Per Subject</span>
+                                <span class="text-base font-extrabold text-gold-400">K${prog.perSubjectRate} <span class="text-[10px] font-normal text-gray-400">/mo</span></span>
+                            </div>
+                            <div class="border-l border-navy-800">
+                                <span class="text-[10px] text-gray-400 font-bold uppercase block">Full Package</span>
+                                <span class="text-base font-extrabold text-emerald-400">K${prog.fullPackageRate} <span class="text-[10px] font-normal text-gray-400">/mo</span></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between border-b border-navy-800 pb-2 mb-3">
+                            <h4 class="text-xs font-extrabold uppercase text-gray-300">Subjects Taught (${prog.subjects.length}):</h4>
+                            ${isAdminMode ? `<button onclick="addSubjectToProgram('${prog.id}')" class="text-[11px] text-gold-400 hover:underline font-bold">+ Add Subject</button>` : ''}
+                        </div>
+
+                        <div class="space-y-1.5 mb-6 max-h-56 overflow-y-auto pr-1">
+                            ${subjectBadges}
+                        </div>
+                    </div>
+
+                    <button onclick="openEnrollModal('${prog.title}')" class="w-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy-950 font-extrabold py-3 rounded-xl shadow-md transition text-xs">
+                        Enroll in ${prog.title}
+                    </button>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // RENDER PRICING TABLE
+        function renderPricingTable() {
+            const container = document.getElementById('pricingTableContainer');
+            container.innerHTML = '';
+
+            programsData.forEach(prog => {
+                const card = document.createElement('div');
+                card.className = "bg-navy-card rounded-3xl p-6 sm:p-8 border border-gold-500/20 text-center flex flex-col justify-between";
+
+                card.innerHTML = `
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-1">${prog.title}</h3>
+                        <p class="text-xs text-gold-400 font-semibold mb-6">${prog.tagline}</p>
+
+                        <div class="space-y-4 mb-6">
+                            <div class="p-4 rounded-2xl bg-navy-950 border border-navy-800">
+                                <span class="text-[10px] text-gray-400 font-bold uppercase block">Pay Per Subject</span>
+                                <div class="text-3xl font-extrabold text-gold-400 mt-1">K${prog.perSubjectRate} <span class="text-xs text-gray-400 font-normal">/ subject / mo</span></div>
+                                <p class="text-[11px] text-gray-400 mt-1">Ideal if you only need help with 1 or 2 specific subjects.</p>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-navy-950 border border-emerald-500/30">
+                                <span class="text-[10px] text-emerald-400 font-bold uppercase block">Full All-Subject Package</span>
+                                <div class="text-3xl font-extrabold text-emerald-400 mt-1">K${prog.fullPackageRate} <span class="text-xs text-gray-400 font-normal">/ month</span></div>
+                                <p class="text-[11px] text-gray-400 mt-1">Covers ALL subjects in this grade level with maximum savings!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="openEnrollModal('${prog.title}')" class="w-full bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-gold-400 font-extrabold border border-gold-500/30 py-3 rounded-xl transition text-xs">
+                        Select Plan & Register
+                    </button>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // CALCULATOR WIDGET LOGIC
+        function initCalculator() {
+            if (programsData.length === 0) return;
+            selectedCalcLevelId = programsData[0].id;
+
+            const btnContainer = document.getElementById('calcGradeButtons');
+            btnContainer.innerHTML = '';
+
+            programsData.forEach(p => {
+                const btn = document.createElement('button');
+                btn.id = `calcGradeBtn_${p.id}`;
+                btn.onclick = () => selectCalcLevel(p.id);
+                btn.className = `p-3 rounded-xl border text-xs font-bold transition text-center ${p.id === selectedCalcLevelId ? 'bg-gold-500 text-navy-950 border-gold-400 shadow-md' : 'bg-navy-900 text-gray-300 border-navy-800 hover:border-gold-500/40'}`;
+                btn.innerHTML = `
+                    <div>${p.title}</div>
+                    <div class="text-[10px] opacity-80 mt-0.5">K${p.perSubjectRate}/subj | K${p.fullPackageRate} Full</div>
+                `;
+                btnContainer.appendChild(btn);
+            });
+
+            renderCalcSubjects();
+        }
+
+        function selectCalcLevel(id) {
+            selectedCalcLevelId = id;
+            programsData.forEach(p => {
+                const btn = document.getElementById(`calcGradeBtn_${p.id}`);
+                if (btn) {
+                    if (p.id === id) {
+                        btn.className = "p-3 rounded-xl border text-xs font-bold transition text-center bg-gold-500 text-navy-950 border-gold-400 shadow-md";
+                    } else {
+                        btn.className = "p-3 rounded-xl border text-xs font-bold transition text-center bg-navy-900 text-gray-300 border-navy-800 hover:border-gold-500/40";
+                    }
+                }
+            });
+
+            renderCalcSubjects();
+        }
+
+        function renderCalcSubjects() {
+            const prog = programsData.find(p => p.id === selectedCalcLevelId);
+            if (!prog) return;
+
+            document.getElementById('calcPerSubjectRateLabel').textContent = `K${prog.perSubjectRate} / subject / month`;
+            document.getElementById('calcFullPackageRateLabel').textContent = `K${prog.fullPackageRate} / month (All Subjects)`;
+
+            const container = document.getElementById('calcSubjectsContainer');
+            container.innerHTML = '';
+
+            prog.subjects.forEach(subj => {
+                const lbl = document.createElement('label');
+                lbl.className = "flex items-center gap-2.5 p-2 bg-navy-950 rounded-xl border border-navy-800 text-xs text-gray-200 cursor-pointer hover:border-gold-500/30 transition";
+                lbl.innerHTML = `
+                    <input type="checkbox" value="${subj}" checked onchange="updateCalcTotal()" class="calcSubjCheckbox accent-gold-500">
+                    <span>${subj}</span>
+                `;
+                container.appendChild(lbl);
+            });
+
+            updateCalcTotal();
+        }
+
+        function onCalcPlanChange() {
+            const planType = document.querySelector('input[name="calcPlanType"]:checked').value;
+            const subjectsWrapper = document.getElementById('calcSubjectsWrapper');
+            if (planType === 'fullPackage') {
+                subjectsWrapper.classList.add('opacity-50', 'pointer-events-none');
+            } else {
+                subjectsWrapper.classList.remove('opacity-50', 'pointer-events-none');
+            }
+            updateCalcTotal();
+        }
+
+        function toggleAllCalcSubjects(checked) {
+            const checkboxes = document.querySelectorAll('.calcSubjCheckbox');
+            checkboxes.forEach(cb => cb.checked = checked);
+            updateCalcTotal();
+        }
+
+        function updateCalcTotal() {
+            const prog = programsData.find(p => p.id === selectedCalcLevelId);
+            if (!prog) return;
+
+            const planType = document.querySelector('input[name="calcPlanType"]:checked').value;
+            let total = 0;
+            let subtext = "";
+
+            if (planType === 'fullPackage') {
+                total = prog.fullPackageRate;
+                subtext = `Full All-Subject Package (${prog.subjects.length} subjects included)`;
+            } else {
+                const checkedCount = document.querySelectorAll('.calcSubjCheckbox:checked').length;
+                total = checkedCount * prog.perSubjectRate;
+                subtext = `${checkedCount} subject(s) selected @ K${prog.perSubjectRate}/subject`;
+            }
+
+            document.getElementById('calcTotalDisplay').textContent = `K${total.toLocaleString()}`;
+            document.getElementById('calcSummarySubtext').textContent = subtext;
+        }
+
+        function enrollWithCalculatedData() {
+            const prog = programsData.find(p => p.id === selectedCalcLevelId);
+            openEnrollModal(prog ? prog.title : '');
+        }
+
+        // ADMIN EDIT & MODAL CONTROLS
+        function openEditProgramModal(id) {
+            const prog = programsData.find(p => p.id === id);
+            if (!prog) return;
+
+            document.getElementById('adminEditId').value = prog.id;
+            document.getElementById('adminTitleInput').value = prog.title;
+            document.getElementById('adminTaglineInput').value = prog.tagline;
+            document.getElementById('adminPerSubjectInput').value = prog.perSubjectRate;
+            document.getElementById('adminFullPackageInput').value = prog.fullPackageRate;
+            document.getElementById('adminSubjectsInput').value = prog.subjects.join(', ');
+
+            document.getElementById('adminModalHeaderTitle').textContent = "Edit Program Level";
+            document.getElementById('adminEditModal').classList.remove('hidden');
+        }
+
+        function openAddLevelModal() {
+            document.getElementById('adminEditId').value = "level_" + Date.now();
+            document.getElementById('adminTitleInput').value = "";
+            document.getElementById('adminTaglineInput').value = "";
+            document.getElementById('adminPerSubjectInput').value = 80;
+            document.getElementById('adminFullPackageInput').value = 350;
+            document.getElementById('adminSubjectsInput').value = "";
+
+            document.getElementById('adminModalHeaderTitle').textContent = "Add New Academic Level";
+            document.getElementById('adminEditModal').classList.remove('hidden');
+        }
+
+        function closeAdminEditModal() {
+            document.getElementById('adminEditModal').classList.add('hidden');
+        }
+
+        function saveAdminProgramData(e) {
+            e.preventDefault();
+            const id = document.getElementById('adminEditId').value;
+            const title = document.getElementById('adminTitleInput').value;
+            const tagline = document.getElementById('adminTaglineInput').value;
+            const perSubjectRate = parseFloat(document.getElementById('adminPerSubjectInput').value) || 50;
+            const fullPackageRate = parseFloat(document.getElementById('adminFullPackageInput').value) || 250;
+            const subjectsStr = document.getElementById('adminSubjectsInput').value;
+            const subjects = subjectsStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
+            const index = programsData.findIndex(p => p.id === id);
+            if (index > -1) {
+                programsData[index] = { ...programsData[index], title, tagline, perSubjectRate, fullPackageRate, subjects };
+            } else {
+                programsData.push({ id, title, tagline, perSubjectRate, fullPackageRate, subjects, icon: "fa-book-bookmark" });
+            }
+
+            saveProgramsData();
+            closeAdminEditModal();
+        }
+
+        function deleteProgramLevel(id) {
+            if (confirm("Are you sure you want to delete this tuition level?")) {
+                programsData = programsData.filter(p => p.id !== id);
+                saveProgramsData();
+            }
+        }
+
+        function addSubjectToProgram(id) {
+            const newSubj = prompt("Enter the name of the new subject to add:");
+            if (newSubj && newSubj.trim().length > 0) {
+                const prog = programsData.find(p => p.id === id);
+                if (prog) {
+                    prog.subjects.push(newSubj.trim());
+                    saveProgramsData();
+                }
+            }
+        }
+
+        function removeSingleSubject(id, index) {
+            const prog = programsData.find(p => p.id === id);
+            if (prog) {
+                prog.subjects.splice(index, 1);
+                saveProgramsData();
+            }
+        }
+
+        // ENROLLMENT MODAL & WHATSAPP INTEGRATION
+        function openEnrollModal(programTitle = '') {
+            const select = document.getElementById('enrollGradeSelect');
+            select.innerHTML = '';
+
+            programsData.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.textContent = p.title;
+                select.appendChild(opt);
+            });
+
+            if (programTitle) {
+                const match = programsData.find(p => p.title.toLowerCase().includes(programTitle.toLowerCase()));
+                if (match) select.value = match.id;
+            }
+
+            onEnrollGradeSelectChange();
+            document.getElementById('enrollModal').classList.remove('hidden');
+        }
+
+        function closeEnrollModal() {
+            document.getElementById('enrollModal').classList.add('hidden');
+        }
+
+        function onEnrollGradeSelectChange() {
+            const id = document.getElementById('enrollGradeSelect').value;
+            const prog = programsData.find(p => p.id === id);
+            const container = document.getElementById('enrollSubjectsChecklist');
+            container.innerHTML = '';
+
+            if (prog) {
+                prog.subjects.forEach(subj => {
+                    const lbl = document.createElement('label');
+                    lbl.className = "flex items-center gap-2 p-2 bg-navy-900 rounded-lg text-xs text-gray-200 cursor-pointer hover:border-gold-500/30 border border-navy-800";
+                    lbl.innerHTML = `
+                        <input type="checkbox" value="${subj}" checked onchange="updateEnrollSummary()" class="enrollSubjCb accent-gold-500">
+                        <span>${subj}</span>
+                    `;
+                    container.appendChild(lbl);
+                });
+            }
+
+            updateEnrollSummary();
+        }
+
+        function updateEnrollSummary() {
+            const id = document.getElementById('enrollGradeSelect').value;
+            const prog = programsData.find(p => p.id === id);
+            if (!prog) return;
+
+            const planType = document.querySelector('input[name="enrollPlanRadio"]:checked').value;
+            let total = 0;
+
+            if (planType === 'fullPackage') {
+                total = prog.fullPackageRate;
+            } else {
+                const checkedCount = document.querySelectorAll('.enrollSubjCb:checked').length;
+                total = checkedCount * prog.perSubjectRate;
+            }
+
+            document.getElementById('enrollModalFeeTotal').textContent = `K${total} / Month`;
+        }
+
+        function submitEnrollmentForm(e) {
+            e.preventDefault();
+            const name = document.getElementById('enrollName').value;
+            const phone = document.getElementById('enrollPhone').value;
+            const progId = document.getElementById('enrollGradeSelect').value;
+            const prog = programsData.find(p => p.id === progId);
+            const planType = document.querySelector('input[name="enrollPlanRadio"]:checked').value;
+
+            const selectedSubjects = Array.from(document.querySelectorAll('.enrollSubjCb:checked')).map(cb => cb.value);
+
+            let feeTotal = 0;
+            if (planType === 'fullPackage') {
+                feeTotal = prog.fullPackageRate;
+            } else {
+                feeTotal = selectedSubjects.length * prog.perSubjectRate;
+            }
+
+            const message = `Hello PennAura Online Academy,\n\nI would like to enroll a student:\n*Name:* ${name}\n*Phone:* ${phone}\n*Grade Category:* ${prog ? prog.title : ''}\n*Plan:* ${planType === 'fullPackage' ? 'Full All-Subject Package' : 'Per-Subject Rate'}\n*Selected Subjects:* ${selectedSubjects.join(', ')}\n*Calculated Monthly Fee:* K${feeTotal}\n\nPlease contact me with class schedules.`;
+
+            const encoded = encodeURIComponent(message);
+            window.open(`https://wa.me/260970000000?text=${encoded}`, '_blank');
+            closeEnrollModal();
+            showToast("Opening WhatsApp with your application details...");
+        }
+
+        // REVISION QUIZ GAME LOGIC
+        function startQuizGame(category) {
+            activeQuizCat = category;
+            activeQIndex = 0;
+            currentQuizScore = 0;
+
+            document.getElementById('quizPickView').classList.add('hidden');
+            document.getElementById('quizResultsView').classList.add('hidden');
+            document.getElementById('quizActiveView').classList.remove('hidden');
+
+            const labels = { primary: "Primary (Grade 7) Quiz", secondary: "Form 1 - 4 Secondary Quiz", gce: "GCE Exam Prep Quiz" };
+            document.getElementById('quizCategoryLabel').textContent = labels[category] || "Academic Quiz";
+
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const list = quizBank[activeQuizCat];
+            const q = list[activeQIndex];
+
+            document.getElementById('quizCurrentIndex').textContent = activeQIndex + 1;
+            document.getElementById('quizTotalQuestions').textContent = list.length;
+            document.getElementById('quizQuestionText').textContent = q.q;
+
+            const container = document.getElementById('quizOptionsContainer');
+            container.innerHTML = '';
+            currentSelectedOpt = null;
+
+            const nextBtn = document.getElementById('quizNextBtn');
+            nextBtn.disabled = true;
+            nextBtn.className = "bg-gold-500 opacity-50 cursor-not-allowed text-navy-950 font-extrabold px-6 py-2.5 rounded-xl text-xs transition";
+
+            document.getElementById('quizFeedbackBox').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `quizOptBtn_${idx}`;
+                btn.onclick = () => selectQuizOption(idx, q.correct);
+                btn.className = "p-3.5 rounded-xl bg-navy-900 border border-navy-800 hover:border-gold-500/40 text-left text-xs font-semibold text-gray-200 transition flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle text-gray-500"></i>`;
+                container.appendChild(btn);
+            });
+
+            startQuizTimer();
+        }
+
+        function startQuizTimer() {
+            clearInterval(quizTimer);
+            quizTimeLeft = 15;
+            document.getElementById('quizTimer').textContent = quizTimeLeft;
+
+            quizTimer = setInterval(() => {
+                quizTimeLeft--;
+                document.getElementById('quizTimer').textContent = quizTimeLeft;
+                if (quizTimeLeft <= 0) {
+                    clearInterval(quizTimer);
+                    handleQuizTimeout();
+                }
+            }, 1000);
+        }
+
+        function selectQuizOption(idx, correctIdx) {
+            if (currentSelectedOpt !== null) return;
+            clearInterval(quizTimer);
+            currentSelectedOpt = idx;
+
+            const q = quizBank[activeQuizCat][activeQIndex];
+            const feedbackBox = document.getElementById('quizFeedbackBox');
+            feedbackBox.classList.remove('hidden');
+
+            if (idx === correctIdx) {
+                currentQuizScore++;
+                const btn = document.getElementById(`quizOptBtn_${idx}`);
+                btn.className = "p-3.5 rounded-xl bg-emerald-950 border-2 border-emerald-500 text-left text-xs font-bold text-emerald-200 flex items-center justify-between";
+                btn.innerHTML = `<span>${q.options[idx]}</span> <i class="fa-solid fa-circle-check text-emerald-400"></i>`;
+
+                feedbackBox.className = "p-3 rounded-xl text-xs font-bold text-center bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                feedbackBox.textContent = "Correct Answer! Great job.";
+            } else {
+                const wrongBtn = document.getElementById(`quizOptBtn_${idx}`);
+                wrongBtn.className = "p-3.5 rounded-xl bg-rose-950 border-2 border-rose-500 text-left text-xs font-bold text-rose-200 flex items-center justify-between";
+                wrongBtn.innerHTML = `<span>${q.options[idx]}</span> <i class="fa-solid fa-circle-xmark text-rose-400"></i>`;
+
+                const correctBtn = document.getElementById(`quizOptBtn_${correctIdx}`);
+                correctBtn.className = "p-3.5 rounded-xl bg-emerald-950 border-2 border-emerald-500 text-left text-xs font-bold text-emerald-200 flex items-center justify-between";
+
+                feedbackBox.className = "p-3 rounded-xl text-xs font-bold text-center bg-rose-500/20 text-rose-300 border border-rose-500/30";
+                feedbackBox.textContent = `Incorrect! The correct answer was: "${q.options[correctIdx]}"`;
+            }
+
+            const nextBtn = document.getElementById('quizNextBtn');
+            nextBtn.disabled = false;
+            nextBtn.className = "bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold px-6 py-2.5 rounded-xl text-xs transition cursor-pointer";
+        }
+
+        function handleQuizTimeout() {
+            if (currentSelectedOpt !== null) return;
+            currentSelectedOpt = -1;
+            const q = quizBank[activeQuizCat][activeQIndex];
+
+            const feedbackBox = document.getElementById('quizFeedbackBox');
+            feedbackBox.classList.remove('hidden');
+            feedbackBox.className = "p-3 rounded-xl text-xs font-bold text-center bg-amber-500/20 text-amber-300 border border-amber-500/30";
+            feedbackBox.textContent = `Time's up! Correct answer: "${q.options[q.correct]}"`;
+
+            const correctBtn = document.getElementById(`quizOptBtn_${q.correct}`);
+            if (correctBtn) correctBtn.className = "p-3.5 rounded-xl bg-emerald-950 border-2 border-emerald-500 text-left text-xs font-bold text-emerald-200 flex items-center justify-between";
+
+            const nextBtn = document.getElementById('quizNextBtn');
+            nextBtn.disabled = false;
+            nextBtn.className = "bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold px-6 py-2.5 rounded-xl text-xs transition cursor-pointer";
+        }
+
+        function nextQuizQuestion() {
+            activeQIndex++;
+            const list = quizBank[activeQuizCat];
+            if (activeQIndex < list.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizResultsView();
+            }
+        }
+
+        function showQuizResultsView() {
+            document.getElementById('quizActiveView').classList.add('hidden');
+            document.getElementById('quizResultsView').classList.remove('hidden');
+
+            const total = quizBank[activeQuizCat].length;
+            document.getElementById('quizScoreText').textContent = `${currentQuizScore} / ${total}`;
+
+            const msg = document.getElementById('quizResultMessage');
+            if (currentQuizScore === total) {
+                msg.textContent = "Outstanding score! You mastered 100% of this revision set.";
+            } else if (currentQuizScore >= total / 2) {
+                msg.textContent = "Good effort! A little more practice will help you reach distinction level.";
+            } else {
+                msg.textContent = "Keep practicing! PennAura tutors are available to strengthen these concepts.";
+            }
+        }
+
+        function resetQuizView() {
+            document.getElementById('quizResultsView').classList.add('hidden');
+            document.getElementById('quizPickView').classList.remove('hidden');
+        }
+
+        // NAV UTILS & TOAST
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
